@@ -17,6 +17,7 @@ mongoose
   .then(() => console.log("DB connection successful!"));
 
 const resolvers = {
+  ...Query,
   ...Mutation,
 };
 

@@ -43,5 +43,14 @@ module.exports = {
         user,
       };
     },
+
+    uploadAvatar: async (_, { url }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      user.avatar = url;
+      await user.save();
+
+      return user;
+    },
   },
 };
