@@ -12,16 +12,19 @@ const typeDefs = gql`
       username: String!
       email: String!
       password: String!
-      avatar: String
-    ): User!
-    login(username: String!, password: String!): User!
+    ): AuthPayload
+    login(username: String!, password: String!): AuthPayload
   }
 
   type User {
     name: String!
     username: String!
-    email: String!
     avatar: String
+  }
+
+  type AuthPayload {
+    token: String
+    user: User
   }
 `;
 

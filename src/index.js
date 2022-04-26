@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server");
 
 const typeDefs = require("./schema");
+const Query = require("./resolvers/Query");
+const Mutation = require("./resolvers/Mutation");
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -11,7 +13,9 @@ mongoose
   })
   .then(() => console.log("DB connection successful!"));
 
-const resolvers = {};
+const resolvers = {
+  ...Mutation,
+};
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
