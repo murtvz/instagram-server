@@ -1,9 +1,8 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
-  type Query {
-    users: [User!]!
-    user(username: String!): User
+  type Query { # Type names should use PascalCase
+    user(username: String!): User # Field names should use camelCase
   }
 
   type Mutation {
@@ -17,6 +16,7 @@ const typeDefs = gql`
   }
 
   type User {
+    id: ID!
     name: String!
     username: String!
     avatar: String

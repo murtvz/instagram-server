@@ -1,10 +1,13 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server");
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
 
 const typeDefs = require("./schema");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
+const User = require("./models/userModel");
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -17,6 +20,23 @@ const resolvers = {
   ...Mutation,
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    // Check if token is available
+    const token = req.headers?.authorization?.split(" ")[1] ?? "";
+    if (!token) return;
+
+    // Verify token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // Check user in database
+    const user = await User.findById(decoded.id).select("+password +email");
+    if (!user) return;
+
+    return { user };
+  },
+});
 
 server.listen().then(({ url }) => console.log(`🚀  Server ready at ${url}`));
