@@ -44,6 +44,14 @@ module.exports = {
       };
     },
 
+    deleteUser: async (_, __, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const deletedUser = await User.findByIdAndDelete(user._id);
+
+      return deletedUser;
+    },
+
     uploadAvatar: async (_, { url }, { user }) => {
       if (!user) throw new Error("Please authenticate!");
 

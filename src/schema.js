@@ -15,6 +15,8 @@ const typeDefs = gql`
 
     login(username: String!, password: String!): AuthPayload
 
+    deleteUser: User
+
     uploadAvatar(url: String!): User
   }
 
