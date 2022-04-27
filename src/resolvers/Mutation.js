@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Post = require("../models/postModel");
 const User = require("../models/userModel");
 
 const signToken = (id) => {
@@ -91,6 +92,28 @@ module.exports = {
       await context.user.save();
 
       return user;
+    },
+
+    post: async (_, { url, caption }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const post = await Post.create({
+        url,
+        caption,
+        postedBy: user._id,
+      });
+
+      return post;
+    },
+
+    deletePost: async (_, { id }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const post = await Post.findOneAndDelete({ postedBy: user._id, _id: id });
+
+      if (!post) throw new Error("No post found");
+
+      return post;
     },
   },
 };

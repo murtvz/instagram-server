@@ -12,14 +12,12 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): AuthPayload
-
     login(username: String!, password: String!): AuthPayload
-
     deleteUser: User
-
     uploadAvatar(url: String!): User
-
     follow(id: ID!): User!
+    post(url: String!, caption: String): Post
+    deletePost(id: ID!): Post
   }
 
   type User {

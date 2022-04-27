@@ -4,6 +4,8 @@ const postSchema = new mongoose.Schema(
   {
     url: {
       type: String,
+      required: true,
+      trim: true,
     },
     caption: {
       type: String,
@@ -18,8 +20,10 @@ const postSchema = new mongoose.Schema(
     ],
     comments: [
       {
-        body: String,
-        trim: true,
+        body: {
+          type: String,
+          trim: true,
+        },
         commentedBy: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "User",
