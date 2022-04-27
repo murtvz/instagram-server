@@ -18,6 +18,8 @@ const typeDefs = gql`
     deleteUser: User
 
     uploadAvatar(url: String!): User
+
+    follow(id: ID!): User!
   }
 
   type User {
@@ -25,6 +27,10 @@ const typeDefs = gql`
     name: String!
     username: String!
     avatar: String
+    bioText: String
+    bioLink: String
+    followers: [User!]!
+    following: [User!]!
   }
 
   type AuthPayload {

@@ -27,9 +27,7 @@ module.exports = {
     },
 
     login: async (_, { username, password }) => {
-      const user = await User.findOne({ username }).select(
-        "password name avatar username"
-      );
+      const user = await User.findOne({ username }).select("+password");
 
       // Check if user exists and password is correct
       if (!user || !(await bcrypt.compare(password, user.password)))
@@ -57,6 +55,38 @@ module.exports = {
 
       user.avatar = url;
       await user.save();
+
+      return user;
+    },
+
+    follow: async (_, { id }, context) => {
+      if (!context.user) throw new Error("Please authenticate!");
+
+      // You cannot follow yourself
+      if (context.user._id.toString() === id)
+        throw new Error("You cannot follow yourself");
+
+      // The user to follow
+      const user = await User.findById(id);
+
+      // Unfollow if already following
+      if (context.user.following.includes(id)) {
+        context.user.following = context.user.following.filter(
+          (el) => el.toString() !== id
+        );
+
+        user.followers = user.followers.filter(
+          (el) => el.toString() !== context.user._id.toString()
+        );
+
+        // Follow user
+      } else {
+        context.user.following.push(id);
+        user.followers.push(context.user._id);
+      }
+
+      await user.save();
+      await context.user.save();
 
       return user;
     },

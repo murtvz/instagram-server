@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const typeDefs = require("./schema");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
+const userResolver = require("./resolvers/User");
 const User = require("./models/userModel");
 
 mongoose
@@ -19,6 +20,7 @@ mongoose
 const resolvers = {
   ...Query,
   ...Mutation,
+  ...userResolver,
 };
 
 const server = new ApolloServer({
