@@ -31,6 +31,22 @@ const typeDefs = gql`
     bioLink: String
     followers: [User!]!
     following: [User!]!
+    posts: [Post!]!
+    likedPosts: [Post!]!
+  }
+
+  type Post {
+    id: ID!
+    url: String!
+    caption: String
+    likes: [User!]!
+    comments: [Comment!]!
+    postedBy: User!
+  }
+
+  type Comment {
+    body: String!
+    commentedBy: User!
   }
 
   type AuthPayload {

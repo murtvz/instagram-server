@@ -59,6 +59,8 @@ module.exports = {
       return user;
     },
 
+    //////////////////////////////
+    // (Un)Follow
     follow: async (_, { id }, context) => {
       if (!context.user) throw new Error("Please authenticate!");
 

@@ -61,6 +61,19 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Virtual populate
+userSchema.virtual("posts", {
+  ref: "Post",
+  foreignField: "postedBy",
+  localField: "_id",
+});
+
+userSchema.virtual("likedPosts", {
+  ref: "Post",
+  foreignField: "likes",
+  localField: "_id",
+});
+
 // Middleware for hashing password
 // Runs when User.create() or User.save() is invoked and only if password has been modified
 userSchema.pre("save", async function (next) {
