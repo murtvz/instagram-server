@@ -20,6 +20,8 @@ const typeDefs = gql`
     likePost(id: ID!): Post
     deletePost(id: ID!): Post
     comment(body: String!, postId: ID!): Comment
+    likeComment(id: ID!): Comment
+    deleteComment(id: ID!): Comment
   }
 
   type User {
@@ -45,6 +47,7 @@ const typeDefs = gql`
   }
 
   type Comment {
+    id: ID!
     body: String!
     commentedBy: User!
     likes: [User!]!

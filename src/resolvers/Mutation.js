@@ -73,6 +73,8 @@ module.exports = {
       // The user to follow
       const user = await User.findById(id);
 
+      if (!user) throw new Error("No user found!");
+
       // Unfollow if already following
       if (context.user.following.includes(id)) {
         context.user.following = context.user.following.filter(
@@ -112,6 +114,8 @@ module.exports = {
 
       const post = await Post.findById(id);
 
+      if (!post) throw new Error("No post found");
+
       // Remove like if already liked
       if (post.likes.includes(user._id)) {
         post.likes = post.likes.filter(
@@ -146,6 +150,42 @@ module.exports = {
         postId,
         commentedBy: user._id,
       });
+
+      return comment;
+    },
+
+    likeComment: async (_, { id }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const comment = await Comment.findById(id);
+
+      if (!comment) throw new Error("No comment found!");
+
+      // If already liked, remove like
+      if (comment.likes.includes(user._id)) {
+        comment.likes = comment.likes.filter(
+          (el) => el.toString() !== user._id.toString()
+        );
+        // Like comment
+      } else {
+        comment.likes.push(user._id);
+      }
+
+      await comment.save();
+
+      return comment;
+    },
+
+    deleteComment: async (_, { id }, { user }) => {
+      if (!user) throw new Error("please authenticate!");
+
+      // Only delete if commented by auth user
+      const comment = await Comment.findOneAndDelete({
+        commentedBy: user._id,
+        _id: id,
+      });
+
+      if (!comment) throw new Error("No comment found!");
 
       return comment;
     },
