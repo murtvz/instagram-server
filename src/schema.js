@@ -18,6 +18,7 @@ const typeDefs = gql`
     follow(id: ID!): User!
     post(url: String!, caption: String): Post
     deletePost(id: ID!): Post
+    comment(body: String!, postId: ID!): Comment
   }
 
   type User {
@@ -46,6 +47,7 @@ const typeDefs = gql`
     body: String!
     commentedBy: User!
     likes: [User!]!
+    postId: Post!
   }
 
   type AuthPayload {

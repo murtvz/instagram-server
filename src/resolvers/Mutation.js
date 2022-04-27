@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Comment = require("../models/commentModel");
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
 
@@ -115,6 +116,18 @@ module.exports = {
       if (!post) throw new Error("No post found");
 
       return post;
+    },
+
+    comment: async (_, { body, postId }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const comment = await Comment.create({
+        body,
+        postId,
+        commentedBy: user._id,
+      });
+
+      return comment;
     },
   },
 };

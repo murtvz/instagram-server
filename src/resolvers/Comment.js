@@ -9,5 +9,10 @@ module.exports = {
       const { likes } = await parent.populate("likes");
       return likes;
     },
+
+    postId: async (parent) => {
+      const { postId } = await parent.populate("postId");
+      return postId;
+    },
   },
 };
