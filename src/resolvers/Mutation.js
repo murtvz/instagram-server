@@ -107,6 +107,26 @@ module.exports = {
       return post;
     },
 
+    likePost: async (_, { id }, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const post = await Post.findById(id);
+
+      // Remove like if already liked
+      if (post.likes.includes(user._id)) {
+        post.likes = post.likes.filter(
+          (el) => el.toString() !== user._id.toString()
+        );
+        // like post
+      } else {
+        post.likes.push(user._id);
+      }
+
+      await post.save();
+
+      return post;
+    },
+
     deletePost: async (_, { id }, { user }) => {
       if (!user) throw new Error("Please authenticate!");
 

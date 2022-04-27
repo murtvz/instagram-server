@@ -17,6 +17,7 @@ const typeDefs = gql`
     uploadAvatar(url: String!): User
     follow(id: ID!): User!
     post(url: String!, caption: String): Post
+    likePost(id: ID!): Post
     deletePost(id: ID!): Post
     comment(body: String!, postId: ID!): Comment
   }
