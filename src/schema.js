@@ -45,6 +45,7 @@ const typeDefs = gql`
   type Comment {
     body: String!
     commentedBy: User!
+    likes: [User!]!
   }
 
   type AuthPayload {

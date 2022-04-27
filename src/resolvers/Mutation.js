@@ -109,6 +109,7 @@ module.exports = {
     deletePost: async (_, { id }, { user }) => {
       if (!user) throw new Error("Please authenticate!");
 
+      // Only delete if post is posted by auth user
       const post = await Post.findOneAndDelete({ postedBy: user._id, _id: id });
 
       if (!post) throw new Error("No post found");

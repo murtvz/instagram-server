@@ -8,6 +8,9 @@ const typeDefs = require("./schema");
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const userResolver = require("./resolvers/User");
+const postResolver = require("./resolvers/Post");
+const commentResolver = require("./resolvers/Comment");
+
 const User = require("./models/userModel");
 
 mongoose
@@ -21,6 +24,8 @@ const resolvers = {
   ...Query,
   ...Mutation,
   ...userResolver,
+  ...postResolver,
+  ...commentResolver,
 };
 
 const server = new ApolloServer({

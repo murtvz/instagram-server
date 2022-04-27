@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comment = require("./commentModel");
 
 const postSchema = new mongoose.Schema(
   {
@@ -18,19 +19,6 @@ const postSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    comments: [
-      {
-        body: {
-          type: String,
-          trim: true,
-        },
-        commentedBy: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-      },
-    ],
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -41,6 +29,12 @@ const postSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+postSchema.virtual("comments", {
+  ref: "Comment",
+  foreignField: "postId",
+  localField: "_id",
+});
 
 const Post = mongoose.model("Post", postSchema);
 
