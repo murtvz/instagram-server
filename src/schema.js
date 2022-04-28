@@ -31,9 +31,14 @@ const typeDefs = gql`
     avatar: String
     bioText: String
     bioLink: String
+    alreadyFollowing: Boolean!
+    followsMe: Boolean!
     followers: [User!]!
+    followerCount: Int!
     following: [User!]!
+    followingCount: Int!
     posts: [Post!]!
+    postCount: Int!
     likedPosts: [Post!]!
   }
 
@@ -44,6 +49,8 @@ const typeDefs = gql`
     likes: [User!]!
     comments: [Comment!]!
     postedBy: User!
+    likeCount: Int!
+    commentCount: Int!
   }
 
   type Comment {

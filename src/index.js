@@ -5,6 +5,7 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 
 const typeDefs = require("./schema");
+
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const userResolver = require("./resolvers/User");
