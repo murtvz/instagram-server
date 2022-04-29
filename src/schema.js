@@ -3,6 +3,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   type Query { # Type names should use PascalCase
     user(username: String!): User # Field names should use camelCase
+    post(id: ID!): Post
   }
 
   type Mutation {
@@ -47,9 +48,10 @@ const typeDefs = gql`
     url: String!
     caption: String
     likes: [User!]!
+    likeCount: Int!
+    alreadyLiked: Boolean!
     comments: [Comment!]!
     postedBy: User!
-    likeCount: Int!
     commentCount: Int!
   }
 
@@ -58,6 +60,7 @@ const typeDefs = gql`
     body: String!
     commentedBy: User!
     likes: [User!]!
+    likeCount: Int!
     postId: Post!
   }
 
