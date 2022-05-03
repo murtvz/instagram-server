@@ -33,7 +33,12 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   cors: {
-    origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+    origin: [
+      "http://localhost:3000",
+      "https://studio.apollographql.com",
+      "https://www.murtaza.io",
+      "https://instagram-murtvz.vercel.app",
+    ],
   },
   context: async ({ req }) => {
     // Check if token is available
