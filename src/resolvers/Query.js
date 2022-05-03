@@ -18,5 +18,19 @@ module.exports = {
 
       return post;
     },
+
+    feed: async (_, __, { user }) => {
+      if (!user) throw new Error("Please authenticate!");
+
+      const userIds = [user._id, ...user.following];
+
+      const posts = await Post.find({
+        postedBy: userIds,
+      }).sort("-createdAt");
+
+      if (!posts) return [];
+
+      return posts;
+    },
   },
 };

@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Query { # Type names should use PascalCase
     user(username: String!): User # Field names should use camelCase
     post(id: ID!): Post
+    feed: [Post!]!
   }
 
   type Mutation {
