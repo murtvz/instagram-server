@@ -34,7 +34,6 @@ const server = new ApolloServer({
   resolvers,
   cors: {
     origin: ["http://localhost:3000", "https://studio.apollographql.com"],
-    credentials: true,
   },
   context: async ({ req }) => {
     // Check if token is available
