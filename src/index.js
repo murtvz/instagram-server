@@ -5,13 +5,7 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 
 const typeDefs = require("./schema");
-
-const Query = require("./resolvers/Query");
-const Mutation = require("./resolvers/Mutation");
-const userResolver = require("./resolvers/User");
-const postResolver = require("./resolvers/Post");
-const commentResolver = require("./resolvers/Comment");
-
+const resolvers = require("./resolvers/index");
 const User = require("./models/userModel");
 
 mongoose
@@ -20,14 +14,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("DB connection successful!"));
-
-const resolvers = {
-  ...Query,
-  ...Mutation,
-  ...userResolver,
-  ...postResolver,
-  ...commentResolver,
-};
 
 const server = new ApolloServer({
   typeDefs,
